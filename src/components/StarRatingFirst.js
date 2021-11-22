@@ -1,25 +1,27 @@
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 const createArray = (length) => [...Array(length)];
 
-export const StarRating = ({
-  totalStars = 5,
-  selectedStars = 0,
-  onRate = (f) => f,
-}) => {
+// props acoplado a div y problemas de seguridad
+export const StarRating = ({ style = {}, totalStars = 5, ...props }) => {
+  const [selectedStars, setSelectedStars] = useState(3);
+
+  console.log({ selectedStars });
+
   return (
-    <>
+    <div style={{ padding: "5px", ...style }} {...props}>
       {createArray(totalStars).map((_, i) => (
         <Star
           key={i}
           selected={selectedStars > i}
-          onSelect={() => onRate(i + 1)}
+          onSelect={() => setSelectedStars(i + 1)}
         />
       ))}
       <p>
         {selectedStars} of {totalStars} stars
       </p>
-    </>
+    </div>
   );
 };
 
